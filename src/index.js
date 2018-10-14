@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Login from './components/Login';
 import Welcome from './components/Welcome';
 import Footer from './components/Footer';
+import CreateArticle from './components/CreateArticle';
+import Single from './components/SingleArticle';
 import * as serviceWorker from './serviceWorker';
+import SingleArticle from './components/SingleArticle';
 
 const Home = () => {
 	return <h1>THIS IS THE HOME PAGE</h1>
@@ -21,6 +25,9 @@ ReactDOM.render(
 				<Route exact path="/" component={Welcome} />
 				<Route path="/about" component={About} />
 				<Route path="/home" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/article/:slug" component={SingleArticle} />
+        <Route path="/articles/create" component={CreateArticle} />
         <Footer />
 			</div>
     </BrowserRouter>
