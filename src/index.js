@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import './index.css';
-import App from './App';
+import {BrowserRouter, Route} from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Welcome from './components/Welcome';
 import * as serviceWorker from './serviceWorker';
 
 const Home = () => {
@@ -16,18 +16,8 @@ const About = () => {
 ReactDOM.render(
     <BrowserRouter>
       <div>
-				<ul>
-					<li>
-						<Link to="/">Root page</Link>
-					</li>
-					<li>
-						<Link to="/about">About page</Link>
-					</li>
-					<li>
-						<Link to="/home">Home page</Link>
-					</li>
-				</ul>
-				<Route exact path="/" component={App} />
+				<Navbar />
+				<Route exact path="/" component={Welcome} />
 				<Route path="/about" component={About} />
 				<Route path="/home" component={Home} />
 			</div>
