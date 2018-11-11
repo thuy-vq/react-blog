@@ -15,7 +15,8 @@ class Signup extends React.Component {
       name: '',
       email: '',
       password: '',
-      passwordComfirm: ''
+      password_confirmation: '',
+      errors: {}
     };
   
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,15 +36,27 @@ class Signup extends React.Component {
     const rules = {
       name: 'required|string',
       email: 'required|email',
-      password: 'required|string|min:6'
+      password: 'required|string|min:6|confirmed'
     };
+    const messages = {
+      required: 'The {{ field }} is required.',
+      'email.email': 'The email is invalid.',
+      'password.confirmed': 'The password confirmation does not match.'
+    }
 
-    validateAll(data, rules)
+    validateAll(data, rules, messages)
       .then(() => {
         //register the user
+        console.log('Success');
       })
       .catch((errors) => {
         console.log(errors);
+        //show the errors to the user
+        const formattedErrors = {};
+        errors.forEach(error => formattedErrors[error.field] = error.message);
+        this.setState({
+          errors: formattedErrors
+        });
       })
   }
 
@@ -57,15 +70,27 @@ class Signup extends React.Component {
           <form className="form-type-material" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input type="text" name="name" onChange={this.handleInputChange} className="form-control" placeholder="Username" />
+              {
+                this.state.errors['name'] &&
+                <small className="text-danger">{this.state.errors['name']}</small>
+              }
             </div>
             <div className="form-group">
               <input type="text" name="email" onChange={this.handleInputChange} className="form-control" placeholder="Email address" />
+              {
+                this.state.errors['email'] &&
+                <small className="text-danger">{this.state.errors['email']}</small>
+              }
             </div>
             <div className="form-group">
               <input type="password" name="password" onChange={this.handleInputChange} className="form-control" placeholder="Password" />
+              {
+                this.state.errors['password'] &&
+                <small className="text-danger">{this.state.errors['password']}</small>
+              }
             </div>
             <div className="form-group">
-              <input type="password" onChange={this.handleInputChange} className="form-control" placeholder="Password (confirm)" />
+              <input type="password" name="password_confirmation" onChange={this.handleInputChange} className="form-control" placeholder="Password (confirm)" />
             </div>
             <br />
             <button className="btn btn-bold btn-block btn-primary" type="submit">Register</button>
