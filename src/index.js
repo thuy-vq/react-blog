@@ -19,12 +19,32 @@ const About = () => {
 	return <h1>THIS IS THE ABOUT PAGE</h1>;
 };
 
-const Main = withRouter(( { location }) => {
-  return (
-    <div>
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      authUser: null
+    };
+  }
+
+  componentDidMount() {
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      this.setState({
+        authUser: JSON.parse(user)
+      });
+    }
+  }
+
+  render() {
+    const { location } = this.props;
+    return (
+      <div>
       {
         location.pathname !== '/login' && location.pathname !== '/signup' &&
-        <Navbar />
+        <Navbar authUser={this.state.authUser} />
       }
       <Route exact path="/" component={Welcome} />
       <Route path="/about" component={About} />
@@ -38,6 +58,13 @@ const Main = withRouter(( { location }) => {
         <Footer />
       }
     </div>
+    );
+  };
+}
+
+const Main = withRouter((props) => {
+  return (
+    <App {...props}/>
   );
 });
 
