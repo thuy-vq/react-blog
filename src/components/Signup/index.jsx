@@ -1,11 +1,9 @@
 import React from 'react';
+import axios from 'axios';
 
 import { validateAll } from 'indicative';
 
-// const Signup = () => {
-//   return (
-//   );
-// };
+import config from '../../config'
 
 class Signup extends React.Component {
   constructor() {
@@ -48,6 +46,20 @@ class Signup extends React.Component {
       .then(() => {
         //register the user
         console.log('Success');
+        axios.post(`${config.apiUrl}/auth/register`, {
+          name: this.state.name,
+          email: this.state.email,
+          password: this.state.password
+        }).then(response => {
+          console.log(response);
+        }).catch(errors => {
+          console.log(errors.response);
+          const formattedErrors = {};
+          formattedErrors['email'] = errors.response.data['email'][0];
+          this.setState({
+            errors: formattedErrors
+          });
+        })
       })
       .catch((errors) => {
         console.log(errors);
