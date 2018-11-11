@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { validateAll } from 'indicative';
+
 // const Signup = () => {
 //   return (
 //   );
@@ -17,13 +19,33 @@ class Signup extends React.Component {
     };
   
     this.handleInputChange = this.handleInputChange.bind(this);
-  };
+  }
   
   handleInputChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
-  };
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(this.state);
+
+    const data = this.state;
+    const rules = {
+      name: 'required|string',
+      email: 'required|email',
+      password: 'required|string|min:6'
+    };
+
+    validateAll(data, rules)
+      .then(() => {
+        //register the user
+      })
+      .catch((errors) => {
+        console.log(errors);
+      })
+  }
 
   render() {
     return (
@@ -32,7 +54,7 @@ class Signup extends React.Component {
           <h5 className="text-uppercase text-center">Register</h5>
           <br />
           <br />
-          <form className="form-type-material">
+          <form className="form-type-material" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input type="text" name="name" onChange={this.handleInputChange} className="form-control" placeholder="Username" />
             </div>

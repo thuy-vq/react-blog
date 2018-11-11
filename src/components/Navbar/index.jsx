@@ -38,7 +38,7 @@ const Navbar = () => {
           </Link>
           <div className="nav-submenu">
             <Link className="nav-link" to="/login">My articles</Link>
-            <a className="nav-link" href>Logout</a>
+            <a className="nav-link" href="true">Logout</a>
           </div>
         </li>
         <li className="nav-item">
