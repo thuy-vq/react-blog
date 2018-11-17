@@ -53,6 +53,7 @@ class Signup extends React.Component {
         }).then(response => {
           console.log(response);
           localStorage.setItem('user', JSON.stringify(response.data.data));
+          this.props.setAuthUser(response.data.data);
           this.props.history.push('/');
         }).catch(errors => {
           console.log(errors.response);

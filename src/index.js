@@ -38,26 +38,32 @@ class App extends React.Component {
     }
   }
 
+  setAuthUser = authUser => {
+    this.setState({
+      authUser
+    });
+  }
+
   render() {
     const { location } = this.props;
     return (
       <div>
-      {
-        location.pathname !== '/login' && location.pathname !== '/signup' &&
-        <Navbar authUser={this.state.authUser} />
-      }
-      <Route exact path="/" component={Welcome} />
-      <Route path="/about" component={About} />
-      <Route path="/home" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/article/:slug" component={SingleArticle} />
-      <Route path="/articles/create" component={CreateArticle} />
-      {
-        location.pathname !== '/login' && location.pathname !== '/signup' &&
-        <Footer />
-      }
-    </div>
+        {
+          location.pathname !== '/login' && location.pathname !== '/signup' &&
+          <Navbar authUser={this.state.authUser} />
+        }
+        <Route exact path="/" component={Welcome} />
+        <Route path="/about" component={About} />
+        <Route path="/home" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" render={(props) => <Signup {...props} setAuthUser={this.setAuthUser} />} />
+        <Route path="/article/:slug" component={SingleArticle} />
+        <Route path="/articles/create" component={CreateArticle} />
+        {
+          location.pathname !== '/login' && location.pathname !== '/signup' &&
+          <Footer />
+        }
+      </div>
     );
   };
 }
