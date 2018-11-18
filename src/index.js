@@ -4,12 +4,14 @@ import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Welcome from './components/Welcome';
+import SingleArticle from './components/SingleArticle';
 import Footer from './components/Footer';
 import CreateArticle from './components/CreateArticle';
-// import Single from './components/SingleArticle';
-import * as serviceWorker from './serviceWorker';
-import SingleArticle from './components/SingleArticle';
 import Signup from './components/Signup';
+
+import AuthService from './services/auth';
+
+import * as serviceWorker from './serviceWorker';
 
 const Home = () => {
 	return <h1>THIS IS THE HOME PAGE</h1>;
@@ -56,7 +58,11 @@ class App extends React.Component {
         <Route path="/about" component={About} />
         <Route path="/home" component={Home} />
         <Route path="/login" component={Login} />
-        <Route path="/signup" render={(props) => <Signup {...props} setAuthUser={this.setAuthUser} />} />
+        <Route path="/signup" render={
+          (props) => <Signup {...props} 
+            registerUser={this.props.authService.registerUser} 
+            setAuthUser={this.setAuthUser} />} 
+        />
         <Route path="/article/:slug" component={SingleArticle} />
         <Route path="/articles/create" component={CreateArticle} />
         {
@@ -70,7 +76,7 @@ class App extends React.Component {
 
 const Main = withRouter((props) => {
   return (
-    <App {...props}/>
+    <App authService={new AuthService()} {...props} />
   );
 });
 
