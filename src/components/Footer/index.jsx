@@ -1,7 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Footer = () => {
-  return (
+const Footer = () => ((
     <footer className="site-footer">
       <div className="container">
         <div className="row gap-y align-items-center">
@@ -15,7 +14,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+));
 
 export default Footer;
